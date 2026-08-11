@@ -1,0 +1,75 @@
+/* ---------------------------------------------
+   Color & type variables — from the design plan
+--------------------------------------------- */
+:root {
+  --color-cream: #FCF9F0;
+  --color-plum: #30011E;
+  --color-cobalt: #246EB9;
+  --color-periwinkle: #86A5D9;
+  --color-sage: #B6CCA1;
+  --color-olive: #585123;
+
+  --font-headline: "Faculty Glyphic", sans-serif;
+  --font-body: "Newsreader", serif;
+}
+
+/* ---------------------------------------------
+   @font-face — Faculty Glyphic (headline) + Newsreader (body)
+   Files expected in /assets/fonts — see README for download steps
+--------------------------------------------- */
+
+@font-face {
+  font-family: "Faculty Glyphic";
+  src: url("../assets/fonts/faculty-glyphic-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Newsreader";
+  src: url("../assets/fonts/newsreader-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Newsreader";
+  src: url("../assets/fonts/newsreader-semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Newsreader";
+  src: url("../assets/fonts/newsreader-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ---------------------------------------------
+   Reset & base
+--------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream);
+  color: var(--color-plum);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-headline);
+  margin: 0;
+}
+
+a {
+  color: var(--color-cobalt);
+  text-decoration: none;
+}
