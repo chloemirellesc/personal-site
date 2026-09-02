@@ -3,18 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>photography — chloe's cabinet</title>
+  <title>photography — chloé's cabinet</title>
   <link rel="icon" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div id="nav-logo"><img src="assets/images/landing/nav-logo.png" alt="menu" /></div>
+  <nav id="nav-flyout" hidden>
+    <a href="writing.html">Writing</a>
+    <a href="photography.html">Photography</a>
+    <a href="irl.html">chloé irl</a>
+  </nav>
+
   <header>
     <a href="index.html">&larr; back</a>
     <h1>Photography</h1>
   </header>
   <main>
-    <!-- corkboard-style gallery goes here -->
+    <div id="photo-grid"></div>
   </main>
+
+  <div id="story-view" hidden>
+    <button id="story-close" aria-label="Close">&times;</button>
+    <div class="story-header">
+      <span id="story-number"></span>
+      <span id="story-title"></span>
+    </div>
+    <div class="story-nav">
+      <button id="story-prev" aria-label="Previous photo">&larr;</button>
+      <div class="story-image-wrap">
+        <img id="story-image" alt="" hidden />
+      </div>
+      <button id="story-next" aria-label="Next photo">&rarr;</button>
+    </div>
+    <p id="story-caption"></p>
+    <div class="story-meta">
+      <span id="story-shot-on"></span>
+      <span id="story-date"></span>
+    </div>
+  </div>
+
+  <script>
+    // Placeholder stories — each is a numbered frame in the grid.
+    // "photos" is the stack you page through with the arrows once
+    // clicked in; each photo can have its own caption. Add a real
+    // "src" per photo once you have one (e.g.
+    // "assets/images/photography/some-photo.jpg") — without one, a
+    // colored placeholder is shown instead.
+    window.PHOTO_STORIES = [
+      {
+        id: 7,
+        title: "bench list",
+        description: "across sf in benches",
+        shotOn: "canon powershot",
+        date: "august 2026",
+        photos: [
+          { src: "assets/images/photography/bench-stack/IMG_8673.jpeg", caption: "mclaren park i" },
+          { src: "assets/images/photography/bench-stack/IMG_1171.jpg", caption: "mclaren park ii" },
+          { src: "assets/images/photography/bench-stack/IMG_1189.jpg", caption: "arlington st" },
+          { src: "assets/images/photography/bench-stack/IMG_8728.jpeg", caption: "laguna honda" },
+          { src: "assets/images/photography/bench-stack/IMG_8749.jpeg", caption: "grand view" },
+          { src: "assets/images/photography/bench-stack/IMG_8759.jpeg", caption: "sunset garden steps" },
+          { src: "assets/images/photography/bench-stack/IMG_1214.JPG", caption: "mountain lake park" },
+          { src: "assets/images/photography/bench-stack/IMG_8854.jpeg", caption: "mountain lake park, in the sun" }
+        ]
+      }
+      /* Placeholder stories — commented out for now. Delete the "/*"
+         above this line and the "*\/" below the last one to bring
+         them back whenever you want more to fill out the grid.
+      , {
+        id: 1,
+        title: "A placeholder title",
+        description: "A short description of this story goes here.",
+        shotOn: "35mm film",
+        date: "August 2026",
+        photos: [
+          { caption: "A placeholder caption" },
+          { caption: "Another photo in the same story" }
+        ]
+      },
+      {
+        id: 2,
+        title: "Another placeholder title",
+        description: "A short description of this story goes here.",
+        shotOn: "iPhone",
+        date: "July 2026",
+        photos: [
+          { caption: "A placeholder caption" }
+        ]
+      },
+      {
+        id: 3,
+        title: "A third placeholder title",
+        description: "A short description of this story goes here.",
+        shotOn: "35mm film",
+        date: "June 2026",
+        photos: [
+          { caption: "A placeholder caption" },
+          { caption: "A second photo" },
+          { caption: "A third photo" }
+        ]
+      },
+      {
+        id: 4,
+        title: "A fourth placeholder title",
+        description: "A short description of this story goes here.",
+        shotOn: "iPhone",
+        date: "May 2026",
+        photos: [
+          { caption: "A placeholder caption" }
+        ]
+      },
+      {
+        id: 5,
+        title: "A fifth placeholder title",
+        description: "A short description of this story goes here.",
+        shotOn: "35mm film",
+        date: "April 2026",
+        photos: [
+          { caption: "A placeholder caption" },
+          { caption: "A second photo" }
+        ]
+      },
+      {
+        id: 6,
+        title: "A sixth placeholder title",
+        description: "A short description of this story goes here.",
+        shotOn: "iPhone",
+        date: "March 2026",
+        photos: [
+          { caption: "A placeholder caption" }
+        ]
+      }
+      */
+    ];
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>

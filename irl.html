@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>chloé irl — chloé's cabinet</title>
+  <link rel="icon" href="assets/images/favicon.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="nav-logo"><img src="assets/images/landing/nav-logo.png" alt="menu" /></div>
+  <nav id="nav-flyout" hidden>
+    <a href="writing.html">Writing</a>
+    <a href="photography.html">Photography</a>
+    <a href="irl.html">chloé irl</a>
+  </nav>
+
+  <header>
+    <a href="index.html">&larr; back</a>
+    <h1>chloé irl</h1>
+  </header>
+  <main>
+    <div id="notes-feed"></div>
+  </main>
+
+  <script>
+    // Placeholder notes — small thoughts, chronological, photo/video
+    // both optional. Leave both out entirely for a text-only note.
+    // "photo: {}" or "video: {}" shows a placeholder box; add
+    // "photo: { src: '...' }" or "video: { src: '...' }" once you
+    // have a real file. Use one or the other per note, not both —
+    // if a note has "video" set, it takes priority over "photo".
+    // Keep video clips short and compressed (.mp4) for page speed.
+    window.NOTES_ENTRIES = [
+      { id: 10, date: "Aug 30, 2026", text: "uh oh.", photo: { src: "assets/images/chloe-irl/aug30.jpg" } },
+      { id: 9, date: "Aug 23, 2026", text: "tomato szn on clement, i want to be a sungold.", photo: { src: "assets/images/chloe-irl/aug23.jpg" } },
+      { id: 8, date: "Aug 16, 2026", text: "waffle on digi", video: { src: "assets/images/chloe-irl/aug16.mp4" } },
+      { id: 6, date: "Aug 16, 2026", text: "drove to santa cruz today just to see my best friend for breakfast, it felt like a break in the timeline. Us two meeting in a place we'd normally never be, not me visiting her nor her visiting me." },
+      { id: 1, date: "Aug 14, 2026", text: "the vanity of having your own anti-social media" }
+      /* Placeholder notes — commented out for now. Delete the "/*"
+         above this line and the "*\/" below the last one to bring
+         them back whenever you want more to fill out the feed.
+      , { id: 2, date: "Aug 13, 2026", text: "Another quick note, this time with a photo attached.", photo: {} },
+      { id: 3, date: "Aug 10, 2026", text: "Just text again, nothing fancy." },
+      { id: 4, date: "Aug 5, 2026", text: "A placeholder thought with a photo too.", photo: {} },
+      { id: 5, date: "Aug 1, 2026", text: "One more short one to round things out." }
+      */
+    ];
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>

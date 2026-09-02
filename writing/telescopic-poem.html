@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Telescopic Poem — chloé's cabinet</title>
+  <link rel="icon" href="../assets/images/favicon.png" />
+  <link rel="stylesheet" href="../css/style.css" />
+
+  <!-- telescopic-text package, per the embed code provided -->
+  <script src="https://unpkg.com/telescopic-text/lib/index.js"></script>
+  <link href="https://unpkg.com/telescopic-text/lib/index.css" rel="stylesheet">
+</head>
+<body>
+  <div id="nav-logo"><img src="../assets/images/landing/nav-logo.png" alt="menu" /></div>
+  <nav id="nav-flyout" hidden>
+    <a href="../writing.html">Writing</a>
+    <a href="../photography.html">Photography</a>
+    <a href="../irl.html">chloé irl</a>
+  </nav>
+
+  <header>
+    <a href="../writing.html">&larr; back to writing</a>
+    <h1>a telescopic poem</h1>
+  </header>
+
+  <main class="post-content">
+    <img class="post-header-image" src="../assets/images/writing-headers/telescopic-header.JPG" alt="" />
+    <div id="telescopicPoem"></div>
+  </main>
+
+  <script>
+    const telescopicContent = createTelescopicTextFromBulletedList(`- my
+- silly
+  - silly slippery
+    - silly slippery soupy
+- poem
+  - words
+    - brain`, {separator: ' ', textMode: 'text'});
+    const container = document.getElementById("telescopicPoem");
+    container.appendChild(telescopicContent);
+  </script>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

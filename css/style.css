@@ -8,6 +8,7 @@
   --color-periwinkle: #86A5D9;
   --color-sage: #B6CCA1;
   --color-olive: #585123;
+  --color-backdrop: #E4DCC4;
 
   --font-headline: "Faculty Glyphic", sans-serif;
   --font-body: "Newsreader", serif;
@@ -72,4 +73,657 @@ h1, h2, h3 {
 a {
   color: var(--color-cobalt);
   text-decoration: none;
+}
+
+/* ---------------------------------------------
+   Notebook cover + page (homepage)
+--------------------------------------------- */
+#notebook-cover {
+  position: fixed;
+  inset: 0;
+  gap: 12px;
+  background: var(--color-plum);
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: opacity 0.4s ease;
+  z-index: 20;
+}
+
+#notebook-cover:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#notebook-cover.is-closing {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#notebook-cover h1 {
+  font-size: 28px;
+  color: var(--color-periwinkle);
+}
+
+#notebook-cover p {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.notebook-frame {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 21;
+}
+
+body.home {
+  min-height: 100vh;
+  background-color: var(--color-backdrop);
+  background-image: url("../assets/images/textures/home.background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#notebook-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 60vh;
+  min-width: 320px;
+  min-height: 400px;
+  padding: 28px;
+  box-sizing: border-box;
+  background: var(--color-cream);
+  border: 10px solid var(--color-cream);
+  outline: 1px solid #e4dcc4;
+  outline-offset: -10px;
+  border-radius: 4px;
+  box-shadow: 0 20px 50px rgba(48, 1, 30, 0.25);
+  overflow: auto;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 5;
+}
+
+#notebook-page.is-visible {
+  opacity: 1;
+}
+
+/* ---------------------------------------------
+   Corner nav logo + flyout
+--------------------------------------------- */
+#nav-logo {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 74px;
+  height: 74px;
+  cursor: pointer;
+  z-index: 30;
+}
+
+#nav-logo:not([hidden]) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#nav-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#nav-flyout {
+  position: fixed;
+  top: 56px;
+  right: 14px;
+  background: #fff;
+  border: 1px solid #e4dcc4;
+  border-radius: 6px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 14px rgba(48, 1, 30, 0.1);
+  gap: 9px;
+  text-align: right;
+  z-index: 30;
+}
+
+#nav-flyout:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+}
+
+#nav-flyout a {
+  font-size: 13px;
+  color: var(--color-plum);
+}
+
+/* ---------------------------------------------
+   Work-in-progress placeholder (homepage) — stands in for the
+   city map until the real building assets are ready
+--------------------------------------------- */
+#wip-frame {
+  height: 100%;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  text-align: center;
+}
+
+#wip-image-box {
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #e4dcc4;
+  box-shadow: 0 6px 20px rgba(48, 1, 30, 0.12);
+}
+
+#wip-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(100%, 360px);
+  max-height: 40vh;
+}
+
+#wip-caption {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-olive);
+  margin: 0;
+}
+
+#wip-links {
+  font-size: 13px;
+  margin: 0;
+}
+
+#wip-links a {
+  color: var(--color-cobalt);
+}
+
+/* ---------------------------------------------
+   City map (homepage) — paused, kept for when the real
+   building assets are ready
+--------------------------------------------- */
+#city-map {
+  position: relative;
+  height: 100%;
+  min-height: 220px;
+}
+
+.building {
+  position: absolute;
+  width: 34px;
+  height: 54px;
+  background: var(--building-color, var(--color-plum));
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.building:hover,
+.building:focus {
+  transform: translateY(-4px);
+}
+
+.building-label {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+  background: var(--color-plum);
+  color: var(--color-cream);
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.building:hover .building-label,
+.building:focus .building-label {
+  opacity: 1;
+}
+
+/* ---------------------------------------------
+   Item surface (bookshelf / closet / kitchen)
+--------------------------------------------- */
+#item-surface {
+  position: relative;
+  min-height: 75vh;
+}
+
+.item {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 6px;
+  background: var(--color-sage);
+  border: 1px solid rgba(48, 1, 30, 0.15);
+  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.08);
+  cursor: grab;
+  transform: rotate(var(--rotate, 0deg));
+  touch-action: none;
+  user-select: none;
+}
+
+.item:nth-of-type(3n+1) { background: var(--color-periwinkle); }
+.item:nth-of-type(3n+2) { background: var(--color-sage); }
+.item:nth-of-type(3n)   { background: var(--color-cobalt); }
+
+.item.is-dragging {
+  cursor: grabbing;
+  box-shadow: 3px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* ---------------------------------------------
+   Bookshelf — clean cover grid, editorial (no shelf prop)
+--------------------------------------------- */
+#bookshelf {
+  padding: 10px 0 0;
+}
+
+#cover-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 30px;
+  padding: 10px 24px 50px;
+}
+
+.book-cover-item {
+  cursor: pointer;
+}
+
+.book-cover-image {
+  aspect-ratio: 2 / 3;
+  border-radius: 2px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 2px 4px 8px rgba(48, 1, 30, 0.15);
+}
+
+.book-cover-title {
+  font-family: var(--font-headline);
+  font-size: 13px;
+  color: var(--color-plum);
+  margin: 8px 0 3px;
+}
+
+.book-cover-rating {
+  font-size: 11px;
+  color: var(--color-olive);
+  letter-spacing: 0.05em;
+}
+
+/* ---------------------------------------------
+   Info card (click reveal)
+--------------------------------------------- */
+#info-card {
+  position: fixed;
+  width: min(280px, 86vw);
+  background: #fdfbf5;
+  border: 1px solid #e4dcc4;
+  border-radius: 6px;
+  padding: 16px 18px;
+  box-shadow: 0 6px 20px rgba(48, 1, 30, 0.15);
+  z-index: 15;
+}
+
+#info-card.is-default {
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+}
+
+#info-card h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+#info-card p {
+  font-size: 13px;
+  margin: 4px 0;
+}
+
+#info-rating {
+  color: var(--color-cobalt);
+  font-weight: 600;
+}
+
+header {
+  padding: 20px 24px;
+}
+
+header a {
+  font-size: 13px;
+}
+
+header h1 {
+  margin-top: 8px;
+  font-size: 26px;
+}
+
+/* ---------------------------------------------
+   Individual writing posts (writing/*.html)
+--------------------------------------------- */
+.post-content {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 10px 24px 60px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.post-header-image {
+  display: block;
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-bottom: 28px;
+}
+
+/* ---------------------------------------------
+   Writing — editorial masthead list (large thumbnail + text)
+--------------------------------------------- */
+#writing-feed {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 10px 24px 50px;
+}
+
+.writing-row {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 24px 0;
+  border-bottom: 1px solid #e4dcc4;
+  text-decoration: none;
+  color: inherit;
+}
+
+.writing-row:first-child {
+  border-top: 1px solid #e4dcc4;
+}
+
+.writing-thumb {
+  width: 170px;
+  aspect-ratio: 4 / 3;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background-size: cover;
+  background-position: center;
+}
+
+.writing-row-content {
+  min-width: 0;
+}
+
+.writing-title {
+  font-family: var(--font-headline);
+  font-size: 20px;
+  color: var(--color-plum);
+  margin: 0 0 6px;
+}
+
+.writing-date {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-olive);
+  margin: 0 0 8px;
+}
+
+.writing-excerpt {
+  font-size: 13px;
+  color: var(--color-plum);
+  opacity: 0.8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------
+   chloé irl — small-thoughts feed
+--------------------------------------------- */
+#notes-feed {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 10px 24px 60px;
+}
+
+.note {
+  padding: 20px 0;
+  border-bottom: 1px solid #e4dcc4;
+}
+
+.note:first-child {
+  border-top: 1px solid #e4dcc4;
+}
+
+.note-date {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-olive);
+  margin: 0 0 6px;
+}
+
+.note-text {
+  font-size: 15px;
+  color: var(--color-plum);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+
+.note-photo {
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+  margin-top: 4px;
+}
+
+.note-video {
+  margin-top: 4px;
+}
+
+.note-video video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  background: var(--color-plum);
+}
+
+.note-video-placeholder {
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-cream);
+  font-size: 12px;
+}
+
+/* ---------------------------------------------
+   Photography — numbered story frames + story view
+--------------------------------------------- */
+#photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+  padding: 10px 24px 40px;
+}
+
+.photo-story {
+  border: 1px solid var(--color-plum);
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+  background: var(--color-cream);
+}
+
+.photo-story-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--color-cobalt);
+  font-family: var(--font-headline);
+}
+
+.photo-story-number {
+  font-size: 13px;
+  color: var(--color-periwinkle);
+}
+
+.photo-story-title {
+  font-size: 15px;
+  color: var(--color-cream);
+}
+
+.photo-story-image {
+  aspect-ratio: 4 / 3;
+  margin: 10px;
+  border-radius: 2px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--color-cream);
+}
+
+.photo-story-description {
+  font-size: 13px;
+  margin: 10px 10px 6px;
+  color: var(--color-plum);
+}
+
+.photo-story-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 10px 10px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-olive);
+}
+
+/* Story view — click into a frame to page through its photos */
+#story-view {
+  position: fixed;
+  inset: 0;
+  background: rgba(48, 1, 30, 0.92);
+  z-index: 40;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+#story-view:not([hidden]) {
+  display: flex;
+}
+
+.story-header {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  color: var(--color-cream);
+  font-family: var(--font-headline);
+}
+
+#story-number {
+  color: var(--color-periwinkle);
+  font-size: 14px;
+}
+
+#story-title {
+  font-size: 20px;
+}
+
+.story-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.story-nav button {
+  background: none;
+  border: 1px solid var(--color-cream);
+  color: var(--color-cream);
+  border-radius: 4px;
+  width: 34px;
+  height: 34px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.story-image-wrap {
+  max-width: min(70vw, 640px);
+  max-height: 65vh;
+  background: var(--color-plum);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+#story-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(70vw, 640px);
+  max-height: 65vh;
+  object-fit: contain;
+}
+
+#story-caption {
+  color: var(--color-cream);
+  font-size: 14px;
+  max-width: 60vw;
+  text-align: center;
+}
+
+.story-meta {
+  display: flex;
+  gap: 20px;
+  color: var(--color-sage);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+#story-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: var(--color-cream);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
 }

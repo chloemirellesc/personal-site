@@ -3,23 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bookshelf — chloe's cabinet</title>
+  <title>bookshelf — chloé's cabinet</title>
   <link rel="icon" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div id="nav-logo"><img src="assets/images/landing/nav-logo.png" alt="menu" /></div>
+  <nav id="nav-flyout" hidden>
+    <a href="writing.html">Writing</a>
+    <a href="photography.html">Photography</a>
+    <a href="irl.html">chloé irl</a>
+  </nav>
+
   <header>
     <a href="index.html">&larr; back</a>
     <h1>Bookshelf</h1>
   </header>
-  <main id="item-surface">
-    <!-- draggable item PNGs get placed here, randomized on load -->
+  <main id="bookshelf">
+    <div id="cover-grid">
+      <!-- book covers get placed here, randomized order on load -->
+    </div>
   </main>
+
   <div id="info-card" hidden>
     <h3 id="info-title"></h3>
     <p id="info-text"></p>
     <p id="info-rating"></p>
   </div>
+
+  <script>
+    // Placeholder books — add a real "cover" image path per book once
+    // you have one (e.g. "assets/images/bookshelf/some-title.jpg").
+    // Without one, a colored placeholder cover is shown instead.
+    // "color" is optional too — leave it out and one is assigned for you.
+    window.PAGE_ITEMS = [
+      { id: 1, title: "A well-worn paperback", text: "Placeholder text — swap in the real story later.", rating: 4 },
+      { id: 2, title: "A borrowed hardcover", text: "Placeholder text — swap in the real story later.", rating: 3 },
+      { id: 3, title: "A dog-eared favorite", text: "Placeholder text — swap in the real story later.", rating: 5 },
+      { id: 4, title: "A book you meant to finish", text: "Placeholder text — swap in the real story later.", rating: 2 },
+      { id: 5, title: "Something from the library sale", text: "Placeholder text — swap in the real story later.", rating: 3 }
+    ];
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>
