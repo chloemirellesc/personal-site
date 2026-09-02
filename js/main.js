@@ -422,14 +422,20 @@ function initNotesFeed() {
     if (note.video) {
       item.appendChild(buildNoteVideo(note.video, i));
     } else if (note.photo) {
-      const photo = document.createElement("div");
-      photo.className = "note-photo";
       if (note.photo.src) {
-        photo.style.backgroundImage = `url(${note.photo.src})`;
+        // Real img tag (not a CSS background) so portrait photos keep
+        // their natural proportions instead of being cropped square.
+        const photo = document.createElement("img");
+        photo.className = "note-photo";
+        photo.src = note.photo.src;
+        photo.alt = "";
+        item.appendChild(photo);
       } else {
+        const photo = document.createElement("div");
+        photo.className = "note-photo-placeholder";
         photo.style.background = THUMB_COLORS[i % THUMB_COLORS.length];
+        item.appendChild(photo);
       }
-      item.appendChild(photo);
     }
 
     feed.appendChild(item);
@@ -445,6 +451,9 @@ function buildNoteVideo(video, i) {
     videoEl.src = video.src;
     videoEl.controls = true;
     videoEl.playsInline = true;
+    // Loads just enough to paint the first frame as a thumbnail,
+    // without downloading the whole clip up front.
+    videoEl.preload = "metadata";
     wrap.appendChild(videoEl);
   } else {
     wrap.classList.add("note-video-placeholder");

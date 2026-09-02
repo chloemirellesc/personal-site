@@ -124,11 +124,7 @@ a {
 
 body.home {
   min-height: 100vh;
-  background-color: var(--color-backdrop);
-  background-image: url("../assets/images/textures/home.background.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--color-olive);
 }
 
 #notebook-page {
@@ -438,6 +434,12 @@ header h1 {
   margin-bottom: 28px;
 }
 
+.post-credit {
+  margin-top: 36px;
+  font-size: 12px;
+  color: var(--color-olive);
+}
+
 /* ---------------------------------------------
    Writing — editorial masthead list (large thumbnail + text)
 --------------------------------------------- */
@@ -531,6 +533,16 @@ header h1 {
 }
 
 .note-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.note-photo-placeholder {
   aspect-ratio: 4 / 3;
   border-radius: 4px;
   background-size: cover;
@@ -545,7 +557,7 @@ header h1 {
 .note-video video {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  max-height: 600px;
   border-radius: 4px;
   background: var(--color-plum);
 }
