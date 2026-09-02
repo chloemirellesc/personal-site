@@ -3,33 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chloe's cabinet</title>
+  <title>chloé's cabinet</title>
   <link rel="icon" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="home">
 
   <!-- Closed notebook cover — click swaps in the frame sequence -->
   <div id="notebook-cover">
-    <h1>chloe's cabinet</h1>
+    <h1>chloé's cabinet</h1>
     <p>tap to open</p>
   </div>
 
-  <!-- Frame-sequence + scattered city map fade in here once opened -->
+  <!-- Corner nav — lives outside the notebook, fixed to the page.
+       Hidden until the notebook opens, then toggled by clicking the logo. -->
+  <div id="nav-logo" hidden><img src="assets/images/landing/nav-logo.png" alt="menu" /></div>
+  <nav id="nav-flyout" hidden>
+    <a href="writing.html">Writing</a>
+    <a href="photography.html">Photography</a>
+    <a href="irl.html">chloé irl</a>
+  </nav>
+
+  <!-- Frame-sequence + open page fade in here once clicked. City map
+       is paused for now — see the placeholder below instead. -->
   <div id="notebook-page" hidden>
-    <div id="nav-logo">c</div>
-    <nav id="nav-flyout" hidden>
-      <a href="writing.html">Writing</a>
-      <a href="photography.html">Photography</a>
-      <a href="bookshelf.html">Bookshelf</a>
-      <a href="closet.html">Closet</a>
-      <a href="kitchen.html">Kitchen</a>
-    </nav>
-    <div id="city-map">
-      <!-- building PNGs go here, absolutely positioned -->
+    <div id="wip-frame">
+      <div id="wip-image-box">
+        <img id="wip-image" src="assets/images/landing/wip.jpg" alt="Work in progress" />
+      </div>
+      <p id="wip-caption">the site is a work in progress — more soon.</p>
+      <p id="wip-links">
+        <a href="writing.html">writing</a> · <a href="photography.html">photography</a> · <a href="irl.html">chloé irl</a>
+      </p>
     </div>
   </div>
 
+  <script>
+    // City map — paused until the real building PNGs + positions are
+    // ready. Uncomment and swap #wip-frame back out for #city-map in
+    // the markup above whenever you want it live again.
+    // window.CITY_BUILDINGS = [
+    //   { title: "Recent writing", href: "writing.html", left: 15, top: 55, color: "var(--color-plum)" },
+    //   { title: "Recent photos", href: "photography.html", left: 48, top: 30, color: "var(--color-cobalt)" },
+    //   { title: "A visual project", href: "photography.html", left: 75, top: 58, color: "var(--color-olive)" },
+    //   { title: "Latest piece", href: "writing.html", left: 30, top: 20, color: "var(--color-sage)" },
+    //   { title: "chloé irl", href: "irl.html", left: 20, top: 75, color: "var(--color-plum)" }
+    // ];
+
+    // Once you have the real photographed opening sequence, list the
+    // frame paths here in order, e.g.:
+    // window.NOTEBOOK_FRAMES = [
+    //   "assets/images/notebook-frames/frame-01.jpg",
+    //   "assets/images/notebook-frames/frame-02.jpg",
+    //   ...
+    // ];
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>

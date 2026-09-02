@@ -3,18 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>writing — chloe's cabinet</title>
+  <title>writing — chloé's cabinet</title>
   <link rel="icon" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div id="nav-logo"><img src="assets/images/landing/nav-logo.png" alt="menu" /></div>
+  <nav id="nav-flyout" hidden>
+    <a href="writing.html">Writing</a>
+    <a href="photography.html">Photography</a>
+    <a href="irl.html">chloé irl</a>
+  </nav>
+
   <header>
     <a href="index.html">&larr; back</a>
     <h1>Writing</h1>
   </header>
   <main>
-    <!-- list of pieces goes here -->
+    <div id="writing-feed"></div>
   </main>
+
+  <script>
+    // Placeholder entries — swap in your real pieces later.
+    // "href" can point to another page, or leave it out / use "#"
+    // for now if the piece doesn't have its own page yet.
+    // Optional "image" — a thumbnail photo path (e.g.
+    // "assets/images/writing/some-photo.jpg") — once you have one,
+    // add it here and it replaces the flat placeholder color.
+    window.WRITING_ENTRIES = [
+      {
+        id: 0,
+        title: "a telescopic poem",
+        date: "August 2026",
+        excerpt: "click to see the poem bloom, ",
+        href: "writing/telescopic-poem.html",
+        image: "assets/images/writing-headers/telescopic-header.JPG"
+      },
+      {
+        id: 1,
+        title: "more soon",
+        date: "August 2026",
+        excerpt: "one day i will be brave?",
+        href: "#"
+      }
+      /* Placeholders — commented out for now. Delete the "/*" above
+         this line and the "*\/" below the last one to bring them
+         back whenever you want more to fill out the feed.
+      , {
+        id: 2,
+        title: "Another placeholder title",
+        date: "July 2026",
+        excerpt: "Another short excerpt goes here.",
+        href: "#"
+      },
+      {
+        id: 3,
+        title: "A third placeholder title",
+        date: "June 2026",
+        excerpt: "A third short excerpt goes here.",
+        href: "#"
+      }
+      */
+    ];
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>

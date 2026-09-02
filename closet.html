@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>closet — chloe's cabinet</title>
+  <title>closet — chloé's cabinet</title>
   <link rel="icon" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <div id="nav-logo"><img src="assets/images/landing/nav-logo.png" alt="menu" /></div>
+  <nav id="nav-flyout" hidden>
+    <a href="writing.html">Writing</a>
+    <a href="photography.html">Photography</a>
+    <a href="irl.html">chloé irl</a>
+  </nav>
+
   <header>
     <a href="index.html">&larr; back</a>
     <h1>Closet</h1>
@@ -20,6 +27,15 @@
     <p id="info-text"></p>
     <p id="info-rating"></p>
   </div>
+  <script>
+    // Placeholder items — swap in real PNGs + your own titles/text/ratings later.
+    window.PAGE_ITEMS = [
+      { id: 1, title: "A favorite jacket", text: "Placeholder text — swap in the real story later.", rating: 5 },
+      { id: 2, title: "A thrifted find", text: "Placeholder text — swap in the real story later.", rating: 4 },
+      { id: 3, title: "A pair of well-worn shoes", text: "Placeholder text — swap in the real story later.", rating: 4 },
+      { id: 4, title: "Something borrowed and never returned", text: "Placeholder text — swap in the real story later.", rating: 3 }
+    ];
+  </script>
   <script src="js/main.js"></script>
 </body>
 </html>
