@@ -371,6 +371,13 @@ img.item.is-dragging {
   margin-bottom: 6px;
 }
 
+#info-author {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--color-olive);
+  margin: -2px 0 8px;
+}
+
 #info-card p {
   font-size: 13px;
   margin: 4px 0;

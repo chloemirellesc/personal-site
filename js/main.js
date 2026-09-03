@@ -127,7 +127,9 @@ function initCityMap() {
 // ---------------------------------------------
 // Item surface: draggable, randomized, tap-and-hold reveal
 // (bookshelf / closet / kitchen pages)
-// Reads window.PAGE_ITEMS: [{ id, title, text, rating }]
+// Reads window.PAGE_ITEMS: [{ id, title, text, rating, author? }]
+// "author" is optional — bookshelf uses it, closet/kitchen/favorites
+// don't need it and can just leave it out.
 // ---------------------------------------------
 
 function initItemSurface() {
@@ -136,6 +138,7 @@ function initItemSurface() {
   if (!surface || !card) return;
 
   const titleEl = document.getElementById("info-title");
+  const authorEl = document.getElementById("info-author");
   const textEl = document.getElementById("info-text");
   const ratingEl = document.getElementById("info-rating");
   const items = window.PAGE_ITEMS || [];
@@ -162,7 +165,7 @@ function initItemSurface() {
     surface.appendChild(el);
 
     makeDraggable(el);
-    makeClickable(el, () => showInfoCard(card, titleEl, textEl, ratingEl, item));
+    makeClickable(el, () => showInfoCard(card, titleEl, textEl, ratingEl, item, null, authorEl));
   });
 
   document.addEventListener("pointerdown", (e) => {
@@ -181,9 +184,14 @@ function starRating(rating) {
 
 // anchorRect is optional — pass a getBoundingClientRect() result to
 // pop the card up beside that element instead of the default fixed
-// bottom-center spot.
-function showInfoCard(card, titleEl, textEl, ratingEl, item, anchorRect) {
+// bottom-center spot. authorEl is optional too — only bookshelf's
+// info card has one; pages without it just skip this.
+function showInfoCard(card, titleEl, textEl, ratingEl, item, anchorRect, authorEl) {
   titleEl.textContent = item.title;
+  if (authorEl) {
+    authorEl.textContent = item.author || "";
+    authorEl.hidden = !item.author;
+  }
   textEl.textContent = item.text;
   ratingEl.textContent = starRating(item.rating);
   card.hidden = false;
