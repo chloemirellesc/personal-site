@@ -457,8 +457,73 @@ function initNotesFeed() {
       }
     }
 
+    item.appendChild(buildLikeButton(note.id));
+
     feed.appendChild(item);
   });
+}
+
+// ---------------------------------------------
+// Like button, backed by countapi.mileshilliard.com — a free,
+// no-signup counting API. Each note gets its own public counter key.
+// One like per visitor's browser (remembered via localStorage); this
+// is a real shared count, but not an unlike/toggle, and there's no
+// login system stopping someone from liking again in a different
+// browser or after clearing storage.
+// ---------------------------------------------
+
+const LIKE_API_BASE = "https://countapi.mileshilliard.com/api/v1";
+
+function likeKey(noteId) {
+  return `chloemirelle-cabinet-irl-note-${noteId}`;
+}
+
+function buildLikeButton(noteId) {
+  const wrap = document.createElement("button");
+  wrap.type = "button";
+  wrap.className = "note-like";
+
+  const heart = document.createElement("span");
+  heart.className = "note-like-heart";
+  heart.textContent = "♡";
+  wrap.appendChild(heart);
+
+  const count = document.createElement("span");
+  count.className = "note-like-count";
+  count.textContent = "";
+  wrap.appendChild(count);
+
+  const storageKey = `liked-note-${noteId}`;
+  const alreadyLiked = localStorage.getItem(storageKey) === "true";
+  if (alreadyLiked) {
+    wrap.classList.add("is-liked");
+    heart.textContent = "♥";
+  }
+
+  // Show the current count on load without incrementing it.
+  fetch(`${LIKE_API_BASE}/get/${likeKey(noteId)}`)
+    .then((res) => (res.ok ? res.json() : { value: 0 }))
+    .then((data) => {
+      count.textContent = data.value || "";
+    })
+    .catch(() => {});
+
+  wrap.addEventListener("click", () => {
+    if (wrap.classList.contains("is-liked")) return;
+
+    wrap.classList.add("is-liked");
+    heart.textContent = "♥";
+    localStorage.setItem(storageKey, "true");
+
+    fetch(`${LIKE_API_BASE}/hit/${likeKey(noteId)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        count.textContent = data.value || "";
+      })
+      .catch(() => {});
+  });
+
+  return wrap;
 }
 
 function buildNoteVideo(video, i) {

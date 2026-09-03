@@ -642,6 +642,34 @@ header h1 {
   background: var(--color-plum);
 }
 
+.note-like {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-olive);
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+.note-like-heart {
+  font-size: 16px;
+  line-height: 1;
+  color: var(--color-plum);
+}
+
+.note-like.is-liked .note-like-heart {
+  color: var(--color-plum);
+}
+
+.note-like.is-liked {
+  cursor: default;
+}
+
 .note-video-placeholder {
   aspect-ratio: 4 / 3;
   border-radius: 4px;
