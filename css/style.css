@@ -9,6 +9,7 @@
   --color-sage: #B6CCA1;
   --color-olive: #585123;
   --color-backdrop: #E4DCC4;
+  --color-baby-yellow: #FBE7A1;
 
   --font-headline: "Faculty Glyphic", sans-serif;
   --font-body: "Newsreader", serif;
@@ -125,6 +126,10 @@ a {
 body.home {
   min-height: 100vh;
   background-color: var(--color-olive);
+}
+
+body.bookshelf {
+  background-color: var(--color-baby-yellow);
 }
 
 #notebook-page {
@@ -306,64 +311,39 @@ body.home {
 
 .item {
   position: absolute;
-  width: 64px;
-  height: 64px;
-  border-radius: 6px;
-  background: var(--color-sage);
-  border: 1px solid rgba(48, 1, 30, 0.15);
-  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.08);
   cursor: grab;
   transform: rotate(var(--rotate, 0deg));
   touch-action: none;
   user-select: none;
 }
 
-.item:nth-of-type(3n+1) { background: var(--color-periwinkle); }
-.item:nth-of-type(3n+2) { background: var(--color-sage); }
-.item:nth-of-type(3n)   { background: var(--color-cobalt); }
+div.item {
+  width: 64px;
+  height: 64px;
+  border-radius: 6px;
+  background: var(--color-sage);
+  border: 1px solid rgba(48, 1, 30, 0.15);
+  box-shadow: 2px 3px 0 rgba(0, 0, 0, 0.08);
+}
 
-.item.is-dragging {
+div.item:nth-of-type(3n+1) { background: var(--color-periwinkle); }
+div.item:nth-of-type(3n+2) { background: var(--color-sage); }
+div.item:nth-of-type(3n)   { background: var(--color-cobalt); }
+
+div.item.is-dragging {
   cursor: grabbing;
   box-shadow: 3px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
-/* ---------------------------------------------
-   Bookshelf — clean cover grid, editorial (no shelf prop)
---------------------------------------------- */
-#bookshelf {
-  padding: 10px 0 0;
+img.item {
+  width: 130px;
+  height: auto;
+  filter: drop-shadow(3px 6px 8px rgba(48, 1, 30, 0.25));
 }
 
-#cover-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 30px;
-  padding: 10px 24px 50px;
-}
-
-.book-cover-item {
-  cursor: pointer;
-}
-
-.book-cover-image {
-  aspect-ratio: 2 / 3;
-  border-radius: 2px;
-  background-size: cover;
-  background-position: center;
-  box-shadow: 2px 4px 8px rgba(48, 1, 30, 0.15);
-}
-
-.book-cover-title {
-  font-family: var(--font-headline);
-  font-size: 13px;
-  color: var(--color-plum);
-  margin: 8px 0 3px;
-}
-
-.book-cover-rating {
-  font-size: 11px;
-  color: var(--color-olive);
-  letter-spacing: 0.05em;
+img.item.is-dragging {
+  cursor: grabbing;
+  filter: drop-shadow(5px 10px 14px rgba(48, 1, 30, 0.35));
 }
 
 /* ---------------------------------------------
@@ -401,6 +381,93 @@ body.home {
   font-weight: 600;
 }
 
+/* ---------------------------------------------
+   Recommend a book — anonymous form (Formspree-backed)
+--------------------------------------------- */
+.recommend-wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 10px 24px 60px;
+}
+
+.recommend-intro {
+  font-size: 14px;
+  color: var(--color-olive);
+  margin: 0 0 24px;
+}
+
+.recommend-box {
+  background: var(--color-periwinkle);
+  border-radius: 6px;
+  padding: 24px;
+}
+
+.recommend-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.recommend-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.recommend-field label {
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-plum);
+}
+
+.recommend-optional {
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--color-olive);
+  font-size: 11px;
+}
+
+.recommend-field input,
+.recommend-field textarea {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--color-plum);
+  background: #fdfbf5;
+  border: 1px solid #e4dcc4;
+  border-radius: 4px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.recommend-field input:focus,
+.recommend-field textarea:focus {
+  outline: 1px solid var(--color-cobalt);
+}
+
+.recommend-submit {
+  align-self: flex-start;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--color-cream);
+  background: var(--color-plum);
+  border: none;
+  border-radius: 4px;
+  padding: 10px 22px;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.recommend-submit:hover {
+  background: var(--color-cobalt);
+}
+
+.recommend-success,
+.recommend-error {
+  font-size: 15px;
+  color: var(--color-plum);
+}
+
 header {
   padding: 20px 24px;
 }
@@ -412,6 +479,12 @@ header a {
 header h1 {
   margin-top: 8px;
   font-size: 26px;
+}
+
+.recommend-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
 }
 
 /* ---------------------------------------------

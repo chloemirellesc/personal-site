@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>recommend a book — chloé's cabinet</title>
+  <link rel="icon" href="assets/images/favicon.png" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="nav-logo"><img src="assets/images/landing/nav-logo.png" alt="menu" /></div>
+  <nav id="nav-flyout" hidden>
+    <a href="writing.html">writing</a>
+    <a href="photography.html">photography</a>
+    <a href="irl.html">chloé irl</a>
+  </nav>
+
+  <header>
+    <a href="bookshelf.html">&larr; back to bookshelf</a>
+    <h1>recommend me a book</h1>
+  </header>
+
+  <main class="recommend-wrap">
+    <p class="recommend-intro">anonymous, no account or email needed — just a book you think i'd like.</p>
+
+    <div class="recommend-box">
+    <form id="recommend-form" class="recommend-form" action="https://formspree.io/f/mqpklzka" method="POST">
+      <div class="recommend-field">
+        <label for="rec-title">book title</label>
+        <input id="rec-title" name="title" type="text" required />
+      </div>
+
+      <div class="recommend-field">
+        <label for="rec-author">author <span class="recommend-optional">(optional)</span></label>
+        <input id="rec-author" name="author" type="text" />
+      </div>
+
+      <div class="recommend-field">
+        <label for="rec-why">why you think i'd like it</label>
+        <textarea id="rec-why" name="why" rows="4" required></textarea>
+      </div>
+
+      <div class="recommend-field">
+        <label for="rec-name">your name <span class="recommend-optional">(optional — leave blank to stay anonymous)</span></label>
+        <input id="rec-name" name="name" type="text" />
+      </div>
+
+      <button type="submit" class="recommend-submit">send it over</button>
+    </form>
+
+    <p id="recommend-success" class="recommend-success" hidden>thank you! this has been sent along.</p>
+    <p id="recommend-error" class="recommend-error" hidden>something went wrong — try again in a moment.</p>
+    </div>
+  </main>
+
+  <script>
+    // Submits via fetch so visitors get an inline thank-you instead of
+    // being redirected off the site to Formspree.
+    const form = document.getElementById("recommend-form");
+    const success = document.getElementById("recommend-success");
+    const error = document.getElementById("recommend-error");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      error.hidden = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" }
+        });
+
+        if (response.ok) {
+          form.hidden = true;
+          success.hidden = false;
+        } else {
+          error.hidden = false;
+        }
+      } catch (err) {
+        error.hidden = false;
+      }
+    });
+  </script>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

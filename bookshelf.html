@@ -7,22 +7,22 @@
   <link rel="icon" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body class="bookshelf">
   <div id="nav-logo"><img src="assets/images/landing/nav-logo.png" alt="menu" /></div>
   <nav id="nav-flyout" hidden>
     <a href="writing.html">writing</a>
     <a href="photography.html">photography</a>
+    <a href="bookshelf.html">bookshelf</a>
     <a href="irl.html">chloé irl</a>
   </nav>
 
   <header>
     <a href="index.html">&larr; back</a>
-    <h1>Bookshelf</h1>
+    <h1>bookshelf</h1>
+    <a href="recommend.html" class="recommend-link">recommend me a book &rarr;</a>
   </header>
-  <main id="bookshelf">
-    <div id="cover-grid">
-      <!-- book covers get placed here, randomized order on load -->
-    </div>
+  <main id="item-surface">
+    <!-- draggable book covers get placed here, randomized on load -->
   </main>
 
   <div id="info-card" hidden>
@@ -37,11 +37,11 @@
     // Without one, a colored placeholder cover is shown instead.
     // "color" is optional too — leave it out and one is assigned for you.
     window.PAGE_ITEMS = [
-      { id: 1, title: "A well-worn paperback", text: "Placeholder text — swap in the real story later.", rating: 4 },
-      { id: 2, title: "A borrowed hardcover", text: "Placeholder text — swap in the real story later.", rating: 3 },
-      { id: 3, title: "A dog-eared favorite", text: "Placeholder text — swap in the real story later.", rating: 5 },
-      { id: 4, title: "A book you meant to finish", text: "Placeholder text — swap in the real story later.", rating: 2 },
-      { id: 5, title: "Something from the library sale", text: "Placeholder text — swap in the real story later.", rating: 3 }
+      { id: 1, title: "The Past Pursues Us Like Detectives, Debt Collectors, Thieves", text: "a recent read, captures the feeling of when you're walking down the street and you are remembering something so vividly that when the memory ends, you have no memories of having walked.", rating: 4, cover: "assets/images/bookshelf/thepastpursuesus.png" },
+      { id: 2, title: "Jazz", text: "if prose were jazz - voices emerging taking hold of the story, introducing new tensions and themes. you're stuck as the reader, unable to resolve the tension, but when you allow the story to exist without need for neatness you eventually see the performance for what it is and you wish you could listen to it again exactly as it was, but you can’t because you’re not who you were and it will never be what it was to you then again.", rating: 5, cover: "assets/images/bookshelf/jazz.png" },
+      { id: 3, title: "The Last Samurai", text: "my current read, it has me stewing on parents and legacies and personal myth.", rating: 4, cover: "assets/images/bookshelf/thelastsamurai.png" },
+      { id: 4, title: "The Opposite of a Person", text: "on my mind a lot recently because: dams, climate change as personal tragedy", rating: 3.5, cover: "assets/images/bookshelf/oppositeofaperson.png" },
+      { id: 5, title: "So Late in the Day", text: "i wish i could be in clare keegan's mind", rating: 5, cover: "assets/images/bookshelf/solateintheday.png" }
     ];
   </script>
   <script src="js/main.js"></script>

@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initNav();
   initCityMap();
   initItemSurface();
-  initBookshelf();
   initWritingList();
   initPhotoGallery();
   initNotesFeed();
@@ -142,8 +141,20 @@ function initItemSurface() {
   const items = window.PAGE_ITEMS || [];
 
   items.forEach((item) => {
-    const el = document.createElement("div");
+    // A real img (not a CSS background) when the item has a "cover" —
+    // used by bookshelf, so cutout covers keep their true silhouette
+    // instead of being cropped into a square. Closet/kitchen items
+    // have no "cover" field, so they render as the usual colored
+    // square, unchanged.
+    const el = document.createElement(item.cover ? "img" : "div");
     el.className = "item";
+    if (item.cover) {
+      el.src = item.cover;
+      el.alt = "";
+      // Images are natively draggable in the browser by default, which
+      // fights with the custom pointer-based dragging below — turn it off.
+      el.draggable = false;
+    }
     el.style.left = 5 + Math.random() * 80 + "%";
     el.style.top = 8 + Math.random() * 65 + "%";
     el.style.setProperty("--rotate", (Math.random() * 16 - 8).toFixed(1) + "deg");
@@ -462,60 +473,6 @@ function buildNoteVideo(video, i) {
   }
 
   return wrap;
-}
-
-// ---------------------------------------------
-// Bookshelf: clean editorial grid of covers, randomized order on
-// each load, click a cover to open the shared info card.
-// Reads window.PAGE_ITEMS: [{ id, title, text, rating, cover?, color? }]
-// "cover" is an image path; without one a colored placeholder is shown.
-// ---------------------------------------------
-
-function initBookshelf() {
-  const grid = document.getElementById("cover-grid");
-  const card = document.getElementById("info-card");
-  if (!grid || !card) return;
-
-  const titleEl = document.getElementById("info-title");
-  const textEl = document.getElementById("info-text");
-  const ratingEl = document.getElementById("info-rating");
-  const items = shuffle((window.PAGE_ITEMS || []).slice());
-
-  items.forEach((item, i) => {
-    const tile = document.createElement("div");
-    tile.className = "book-cover-item";
-
-    const cover = document.createElement("div");
-    cover.className = "book-cover-image";
-    if (item.cover) {
-      cover.style.backgroundImage = `url(${item.cover})`;
-    } else {
-      cover.style.background = item.color || THUMB_COLORS[i % THUMB_COLORS.length];
-    }
-    tile.appendChild(cover);
-
-    const title = document.createElement("p");
-    title.className = "book-cover-title";
-    title.textContent = item.title;
-    tile.appendChild(title);
-
-    const rating = document.createElement("p");
-    rating.className = "book-cover-rating";
-    rating.textContent = starRating(item.rating);
-    tile.appendChild(rating);
-
-    tile.addEventListener("click", () => showInfoCard(card, titleEl, textEl, ratingEl, item));
-
-    grid.appendChild(tile);
-  });
-}
-
-function shuffle(list) {
-  for (let i = list.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [list[i], list[j]] = [list[j], list[i]];
-  }
-  return list;
 }
 
 function makeDraggable(el) {
