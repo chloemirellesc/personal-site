@@ -37,6 +37,16 @@ function initNotebook() {
       openPage(page, cover, navLogo);
     }
   });
+
+  // "Back" links on other pages point to index.html#open, so returning
+  // from elsewhere on the site lands straight on the open page instead
+  // of the closed cover.
+  if (window.location.hash === "#open") {
+    cover.hidden = true;
+    page.hidden = false;
+    if (navLogo) navLogo.hidden = false;
+    requestAnimationFrame(() => page.classList.add("is-visible"));
+  }
 }
 
 function playFrames(frames, onDone) {
