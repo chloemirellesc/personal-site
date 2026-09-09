@@ -183,6 +183,11 @@ body.bookshelf {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+#nav-logo:hover img {
+  transform: rotate(-12deg);
 }
 
 #nav-flyout {
