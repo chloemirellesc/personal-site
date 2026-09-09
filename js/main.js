@@ -305,9 +305,11 @@ function initWritingList() {
 // Photography: numbered story frames in a grid. Each story holds a
 // stack of photos you page through with arrows once clicked in.
 // Reads window.PHOTO_STORIES:
-// [{ id, title, description, shotOn, date, photos: [{ src, caption }] }]
+// [{ id, title, description, shotOn, date, headerColor?, photos: [{ src, caption }] }]
 // "src" is optional per photo — without one a colored placeholder
-// is shown instead.
+// is shown instead. "headerColor" is optional too — any CSS color
+// value (e.g. "var(--color-olive)"); without one it falls back to
+// the default cobalt banner.
 // ---------------------------------------------
 
 let currentStory = null;
@@ -326,6 +328,9 @@ function initPhotoGallery() {
 
     const header = document.createElement("div");
     header.className = "photo-story-header";
+    if (story.headerColor) {
+      header.style.setProperty("--header-color", story.headerColor);
+    }
     header.innerHTML =
       `<span class="photo-story-number">#${i + 1}</span>` +
       `<span class="photo-story-title">${story.title || ""}</span>`;

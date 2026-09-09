@@ -709,7 +709,7 @@ header h1 {
   align-items: baseline;
   gap: 8px;
   padding: 8px 10px;
-  background: var(--color-cobalt);
+  background: var(--header-color, var(--color-cobalt));
   font-family: var(--font-headline);
 }
 
