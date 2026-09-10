@@ -60,6 +60,11 @@
   box-sizing: border-box;
 }
 
+html {
+  margin: 0;
+  height: 100%;
+}
+
 body {
   margin: 0;
   background: var(--color-cream);
@@ -82,10 +87,13 @@ a {
 --------------------------------------------- */
 #notebook-cover {
   position: fixed;
-  inset: 0;
-  gap: 12px;
-  background: var(--color-plum);
-  color: var(--color-cream);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 60vh;
+  min-width: 320px;
+  min-height: 400px;
   cursor: pointer;
   transition: opacity 0.4s ease;
   z-index: 20;
@@ -93,9 +101,14 @@ a {
 
 #notebook-cover:not([hidden]) {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+#notebook-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 #notebook-cover.is-closing {
@@ -103,30 +116,38 @@ a {
   pointer-events: none;
 }
 
-#notebook-cover h1 {
-  font-size: 28px;
-  color: var(--color-periwinkle);
-}
-
-#notebook-cover p {
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-
 .notebook-frame {
   position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 60vh;
+  min-width: 320px;
+  min-height: 400px;
+  object-fit: contain;
   z-index: 21;
+  /* Growing the frame itself into the final zoomed size (rather than
+     swapping to a differently-sized element) is what makes the last
+     part of the animation read as one continuous camera zoom. */
+  transition: width 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+    height 1.6s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s ease;
+}
+
+.notebook-frame.is-zooming {
+  width: 180vw;
+  height: 180vh;
+}
+
+.notebook-frame.is-fading {
+  opacity: 0;
 }
 
 body.home {
   min-height: 100vh;
   background-color: var(--color-olive);
+  overflow: hidden;
 }
 
 body.bookshelf {
@@ -134,6 +155,56 @@ body.bookshelf {
 }
 
 #notebook-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180vw;
+  height: 180vh;
+  min-width: 320px;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  /* The zoom itself already happened on the flip frame above — this
+     is just a quick handoff fade at matching size/position, so no
+     transform animation is needed here. */
+  transition: opacity 0.6s ease;
+  z-index: 5;
+}
+
+#notebook-page.is-visible {
+  opacity: 1;
+}
+
+/* The stage locks to the notebook photo's own aspect ratio, so the
+   art pieces below — positioned in percentages of this box — always
+   land in the same spot on the page itself, not the viewport. */
+#notebook-stage {
+  position: relative;
+  height: 100%;
+  max-width: 100%;
+  aspect-ratio: 1050 / 1400;
+}
+
+#notebook-page-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#notebook-art {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------------------------------------------
+   Reusable cream card — the old notebook-page look, now shared by
+   any page (like 404) that needs the same framed backdrop
+--------------------------------------------- */
+.page-card {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -151,13 +222,28 @@ body.bookshelf {
   border-radius: 4px;
   box-shadow: 0 20px 50px rgba(48, 1, 30, 0.25);
   overflow: auto;
-  opacity: 0;
-  transition: opacity 0.6s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 5;
 }
 
-#notebook-page.is-visible {
-  opacity: 1;
+.art-piece {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+.art-piece img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(2px 5px 10px rgba(48, 1, 30, 0.3));
+}
+
+.art-piece:hover {
+  transform: translate(-50%, -50%) scale(1.06) translateY(-3px);
 }
 
 /* ---------------------------------------------
@@ -480,6 +566,84 @@ img.item.is-dragging {
 .recommend-error {
   font-size: 15px;
   color: var(--color-plum);
+}
+
+/* ---------------------------------------------
+   About page
+--------------------------------------------- */
+body.about {
+  background: var(--color-cobalt);
+  color: var(--color-cream);
+  min-height: 100vh;
+}
+
+body.about header a {
+  color: var(--color-cream);
+}
+
+.about-wrap {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 24px 70px;
+}
+
+.about-photostrip {
+  width: 160px;
+  flex-shrink: 0;
+  filter: drop-shadow(4px 8px 14px rgba(0, 0, 0, 0.35));
+}
+
+.about-text h1 {
+  font-size: 44px;
+  color: var(--color-cream);
+  margin-bottom: 22px;
+}
+
+.about-intro,
+.about-outro {
+  font-size: 21px;
+  color: var(--color-plum);
+  margin: 0 0 18px;
+}
+
+.about-list {
+  font-size: 15px;
+  color: var(--color-cream);
+  line-height: 1.7;
+  text-align: justify;
+  margin: 0 0 26px 24px;
+}
+
+.about-contact {
+  background: var(--color-avocado);
+  border-radius: 20px;
+  padding: 26px 30px;
+}
+
+.about-contact p {
+  font-size: 18px;
+  color: var(--color-cream);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.about-contact a {
+  color: var(--color-cream);
+}
+
+@media (max-width: 640px) {
+  .about-wrap {
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+  }
+
+  .about-photostrip {
+    width: 130px;
+  }
 }
 
 header {

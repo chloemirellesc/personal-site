@@ -7,6 +7,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   initNotebook();
+  initNotebookArt();
   initNav();
   initCityMap();
   initItemSurface();
@@ -26,15 +27,17 @@ function initNotebook() {
   if (!cover || !page) return;
 
   cover.addEventListener("click", () => {
-    // Fill window.NOTEBOOK_FRAMES with your real photographed frame
-    // paths later (see README) — until then this just fades the
-    // cover away directly.
     const frames = window.NOTEBOOK_FRAMES || [];
 
+    // The cover shows the exact same image as the first frame, so it
+    // can disappear the instant the frame sequence starts — no
+    // crossfade needed, the picture never actually changes.
+    cover.hidden = true;
+
     if (frames.length > 0) {
-      playFrames(frames, () => openPage(page, cover, navLogo));
+      playFrames(frames, () => openPage(page, navLogo));
     } else {
-      openPage(page, cover, navLogo);
+      openPage(page, navLogo);
     }
   });
 
@@ -43,9 +46,7 @@ function initNotebook() {
   // of the closed cover.
   if (window.location.hash === "#open") {
     cover.hidden = true;
-    page.hidden = false;
-    if (navLogo) navLogo.hidden = false;
-    requestAnimationFrame(() => page.classList.add("is-visible"));
+    openPage(page, navLogo);
   }
 }
 
@@ -57,31 +58,75 @@ function playFrames(frames, onDone) {
 
   const img = document.createElement("img");
   img.className = "notebook-frame";
+  img.draggable = false;
   img.src = frames[0];
   document.body.appendChild(img);
 
   let i = 0;
-  const FRAME_DELAY_MS = 120;
+  // Slower, more deliberate flip than a typical UI animation —
+  // adjust this if you want the flip quicker or slower.
+  const FRAME_DELAY_MS = 220;
   const interval = setInterval(() => {
     i++;
     if (i >= frames.length) {
       clearInterval(interval);
-      img.remove();
-      onDone();
+      zoomIntoLastFrame(img, onDone);
       return;
     }
     img.src = frames[i];
   }, FRAME_DELAY_MS);
 }
 
-function openPage(page, cover, navLogo) {
-  cover.classList.add("is-closing");
-  setTimeout(() => {
-    cover.hidden = true;
-    page.hidden = false;
-    if (navLogo) navLogo.hidden = false;
-    requestAnimationFrame(() => page.classList.add("is-visible"));
-  }, 400);
+function zoomIntoLastFrame(img, onDone) {
+  // Grow the very same last-flip-frame element into the final zoomed
+  // size, so the flip and the zoom read as one continuous motion
+  // instead of a cut between two differently-sized elements.
+  requestAnimationFrame(() => img.classList.add("is-zooming"));
+
+  img.addEventListener("transitionend", function handleZoomEnd(e) {
+    if (e.propertyName !== "width") return;
+    img.removeEventListener("transitionend", handleZoomEnd);
+    // Page fades in at the exact size/position the frame just grew
+    // to, so the handoff is invisible, then the frame is discarded.
+    onDone();
+    img.classList.add("is-fading");
+    setTimeout(() => img.remove(), 700);
+  });
+}
+
+function openPage(page, navLogo) {
+  page.hidden = false;
+  if (navLogo) navLogo.hidden = false;
+  requestAnimationFrame(() => page.classList.add("is-visible"));
+}
+
+// ---------------------------------------------
+// Homepage: sticker-style art pieces pasted onto the open page,
+// each one a link to a different part of the site
+// ---------------------------------------------
+
+function initNotebookArt() {
+  const layer = document.getElementById("notebook-art");
+  const items = window.NOTEBOOK_ART || [];
+  if (!layer || items.length === 0) return;
+
+  items.forEach((art) => {
+    const link = document.createElement("a");
+    link.className = "art-piece";
+    link.href = art.href || "#";
+    link.style.left = art.left + "%";
+    link.style.top = art.top + "%";
+    link.style.width = art.width + "%";
+    if (art.title) link.title = art.title;
+
+    const img = document.createElement("img");
+    img.src = art.image;
+    img.alt = art.title || "";
+    img.draggable = false;
+
+    link.appendChild(img);
+    layer.appendChild(link);
+  });
 }
 
 // ---------------------------------------------

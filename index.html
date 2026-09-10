@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chloé's cabinet</title>
+  <title>chloé's commonplace</title>
   <link rel="icon" href="assets/images/favicon.png" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="home">
 
-  <!-- Closed notebook cover — click swaps in the frame sequence -->
+  <!-- Closed notebook cover — same photo as the first opening frame,
+       sitting in the same spot the animation plays in. Click swaps in
+       the frame sequence, seamlessly, since it starts on this exact image. -->
   <div id="notebook-cover">
-    <h1>chloé's cabinet</h1>
-    <p>tap to open</p>
+    <img src="assets/images/notebook-frames/frame-01.png" alt="tap to open" />
   </div>
 
   <!-- Corner nav — lives outside the notebook, fixed to the page.
@@ -28,14 +29,9 @@
   <!-- Frame-sequence + open page fade in here once clicked. City map
        is paused for now — see the placeholder below instead. -->
   <div id="notebook-page" hidden>
-    <div id="wip-frame">
-      <div id="wip-image-box">
-        <img id="wip-image" src="assets/images/landing/wip.jpg" alt="Work in progress" />
-      </div>
-      <p id="wip-caption">the site is a work in progress — more soon.</p>
-      <p id="wip-links">
-        <a href="writing.html">writing</a> · <a href="photography.html">photography</a> · <a href="bookshelf.html">little library</a> · <a href="irl.html">chloé irl</a>
-      </p>
+    <div id="notebook-stage">
+      <img id="notebook-page-image" src="assets/images/notebook-frames/frame-08.png" alt="" />
+      <div id="notebook-art"></div>
     </div>
   </div>
 
@@ -51,13 +47,33 @@
     //   { title: "chloé irl", href: "irl.html", left: 20, top: 75, color: "var(--color-plum)" }
     // ];
 
-    // Once you have the real photographed opening sequence, list the
-    // frame paths here in order, e.g.:
-    // window.NOTEBOOK_FRAMES = [
-    //   "assets/images/notebook-frames/frame-01.jpg",
-    //   "assets/images/notebook-frames/frame-02.jpg",
-    //   ...
-    // ];
+    // Real photographed opening sequence — background-removed PNGs,
+    // played in order over the notebook cover before landing on the
+    // open page.
+    window.NOTEBOOK_FRAMES = [
+      "assets/images/notebook-frames/frame-01.png",
+      "assets/images/notebook-frames/frame-02.png",
+      "assets/images/notebook-frames/frame-03.png",
+      "assets/images/notebook-frames/frame-04.png",
+      "assets/images/notebook-frames/frame-05.png",
+      "assets/images/notebook-frames/frame-06.png",
+      "assets/images/notebook-frames/frame-07.png",
+      "assets/images/notebook-frames/frame-08.png"
+    ];
+
+    // Sticker-style art pieces pasted onto the open notebook page,
+    // each linking to a different part of the site. left/top/width
+    // are all percentages of the notebook photo itself, so they stay
+    // put on the page regardless of screen size. Nudge the numbers
+    // below if a piece needs to sit differently once you see it live.
+    window.NOTEBOOK_ART = [
+      { title: "about", href: "about.html", image: "assets/images/landing/photostrip-about.png", left: 15.1, top: 47, width: 13.5 },
+      { title: "photography", href: "photography.html", image: "assets/images/landing/cow-photography.png", left: 29.5, top: 39.3, width: 14.6 },
+      { title: "coming soon", href: "404.html", image: "assets/images/landing/brownbarn-empty.png", left: 29.5, top: 56, width: 14.6 },
+      { title: "chloé irl", href: "irl.html", image: "assets/images/landing/landscape-chloe-irl.png", left: 49.6, top: 37.3, width: 15.9 },
+      { title: "little library", href: "bookshelf.html", image: "assets/images/landing/percy-littlelibrary.png", left: 66.4, top: 42.5, width: 14.3 },
+      { title: "writing", href: "writing.html", image: "assets/images/landing/stillife-writing.png", left: 54.7, top: 56.5, width: 22.5 }
+    ];
   </script>
   <script src="js/main.js"></script>
 </body>
