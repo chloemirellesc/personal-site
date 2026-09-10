@@ -85,11 +85,15 @@ a {
 /* ---------------------------------------------
    Notebook cover + page (homepage)
 --------------------------------------------- */
+/* Right-anchored so the open notebook's right edge lines up with the
+   left edge of the corner star (top:14px, right:14px, 74px wide —
+   88px total from the viewport edge), leaving the freed space on the
+   left to let the page run bigger. */
 #notebook-cover {
   position: fixed;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  right: 88px;
+  transform: translateY(-50%);
   width: 60vw;
   height: 60vh;
   min-width: 320px;
@@ -119,8 +123,8 @@ a {
 .notebook-frame {
   position: fixed;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  right: 88px;
+  transform: translateY(-50%);
   width: 60vw;
   height: 60vh;
   min-width: 320px;
@@ -136,7 +140,7 @@ a {
 }
 
 .notebook-frame.is-zooming {
-  width: min(92vw, 69vh);
+  width: min(calc(100vw - 100px), 78vh);
   height: auto;
   aspect-ratio: 1050 / 1400;
 }
@@ -157,10 +161,11 @@ body.bookshelf {
 
 #notebook-page {
   position: fixed;
-  inset: 0;
+  top: 50%;
+  right: 88px;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
-  justify-content: center;
   opacity: 0;
   /* The zoom itself already happened on the flip frame above — this
      is just a quick handoff fade at matching size/position, so no
@@ -174,14 +179,15 @@ body.bookshelf {
 }
 
 /* The stage locks to the notebook photo's own aspect ratio using
-   min(vw, vh-based-equivalent), which — unlike plain vw/vh sizing —
-   always fits the whole page on screen with no cropping, on any
-   screen shape from a wide desktop to a tall phone. That keeps the
-   art pieces (positioned in percentages of this box) lined up with
-   the actual photo everywhere, and keeps the whole page in view. */
+   min(), which — unlike plain vw/vh sizing — always fits the whole
+   page on screen with no cropping, on any screen shape from a wide
+   desktop to a tall phone. That keeps the art pieces (positioned in
+   percentages of this box) lined up with the actual photo everywhere,
+   and keeps the whole page in view. The calc() keeps its right edge
+   from ever passing the star on the left as it grows. */
 #notebook-stage {
   position: relative;
-  width: min(92vw, 69vh);
+  width: min(calc(100vw - 100px), 78vh);
   min-width: 260px;
   aspect-ratio: 1050 / 1400;
 }
