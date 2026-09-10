@@ -140,7 +140,7 @@ a {
 }
 
 .notebook-frame.is-zooming {
-  width: min(calc(100vw - 100px), 78vh);
+  width: min(calc(100vw - 96px), 92vh);
   height: auto;
   aspect-ratio: 1050 / 1400;
 }
@@ -187,7 +187,7 @@ body.bookshelf {
    from ever passing the star on the left as it grows. */
 #notebook-stage {
   position: relative;
-  width: min(calc(100vw - 100px), 78vh);
+  width: min(calc(100vw - 96px), 92vh);
   min-width: 260px;
   aspect-ratio: 1050 / 1400;
 }
