@@ -136,8 +136,9 @@ a {
 }
 
 .notebook-frame.is-zooming {
-  width: 180vw;
-  height: 180vh;
+  width: min(92vw, 69vh);
+  height: auto;
+  aspect-ratio: 1050 / 1400;
 }
 
 .notebook-frame.is-fading {
@@ -156,13 +157,7 @@ body.bookshelf {
 
 #notebook-page {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 180vw;
-  height: 180vh;
-  min-width: 320px;
-  min-height: 400px;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,13 +173,16 @@ body.bookshelf {
   opacity: 1;
 }
 
-/* The stage locks to the notebook photo's own aspect ratio, so the
-   art pieces below — positioned in percentages of this box — always
-   land in the same spot on the page itself, not the viewport. */
+/* The stage locks to the notebook photo's own aspect ratio using
+   min(vw, vh-based-equivalent), which — unlike plain vw/vh sizing —
+   always fits the whole page on screen with no cropping, on any
+   screen shape from a wide desktop to a tall phone. That keeps the
+   art pieces (positioned in percentages of this box) lined up with
+   the actual photo everywhere, and keeps the whole page in view. */
 #notebook-stage {
   position: relative;
-  height: 100%;
-  max-width: 100%;
+  width: min(92vw, 69vh);
+  min-width: 260px;
   aspect-ratio: 1050 / 1400;
 }
 
