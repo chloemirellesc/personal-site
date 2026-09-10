@@ -85,19 +85,19 @@ a {
 /* ---------------------------------------------
    Notebook cover + page (homepage)
 --------------------------------------------- */
-/* Right-anchored so the open notebook's right edge lines up with the
-   left edge of the corner star (top:14px, right:14px, 74px wide —
-   88px total from the viewport edge), leaving the freed space on the
-   left to let the page run bigger. */
 #notebook-cover {
   position: fixed;
   top: 50%;
-  right: 88px;
-  transform: translateY(-50%);
-  width: 60vw;
-  height: 60vh;
-  min-width: 320px;
-  min-height: 400px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* The frames were cropped tight to the actual notebook (removing
+     the large transparent margins baked into the original photos),
+     so the true ratio is 825:803 — very close to square, not the old
+     1050:1400 portrait canvas. */
+  width: min(61.6vh, 100vw);
+  height: min(60vh, 97.3vw);
+  min-width: 200px;
+  min-height: 195px;
   cursor: pointer;
   transition: opacity 0.4s ease;
   z-index: 20;
@@ -123,29 +123,32 @@ a {
 .notebook-frame {
   position: fixed;
   top: 50%;
-  right: 88px;
-  transform: translateY(-50%);
-  width: 60vw;
-  height: 60vh;
-  min-width: 320px;
-  min-height: 400px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Matched to the cropped photo's own 825:803 ratio, same as the
+     zoomed target below — keeping the box's shape identical to the
+     image's shape at every size means object-fit:contain never has
+     to letterbox, so growing it never causes the photo to visibly
+     resize inside its own frame mid-transition. */
+  width: min(61.6vh, 100vw);
+  height: min(60vh, 97.3vw);
+  min-width: 200px;
+  min-height: 195px;
   object-fit: contain;
   z-index: 21;
   /* Growing the frame itself into the final zoomed size (rather than
      swapping to a differently-sized element) is what makes the last
      part of the animation read as one continuous camera zoom. */
-  transition: width 1.6s cubic-bezier(0.16, 1, 0.3, 1),
-    height 1.6s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.6s ease;
+  transition: width 1.3s cubic-bezier(0.16, 1, 0.3, 1),
+    height 1.3s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.4s ease;
 }
 
 .notebook-frame.is-zooming {
-  /* Width and height are each capped by the same two constraints
-     (available width, available height converted to its matching
-     width/height) expressed in their own units, so they always agree
-     with each other and the box never overflows the screen. */
-  width: min(70.5vh, calc(100vw - 96px));
-  height: min(94vh, calc((100vw - 96px) * 1.3333));
+  /* Same matched-pair idea, just at the bigger final size — centered,
+     so it can use almost the whole screen in either dimension. */
+  width: min(96vw, 98.6vh);
+  height: min(93.4vw, 96vh);
 }
 
 .notebook-frame.is-fading {
@@ -165,15 +168,16 @@ body.bookshelf {
 #notebook-page {
   position: fixed;
   top: 50%;
-  right: 88px;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
+  justify-content: center;
   opacity: 0;
   /* The zoom itself already happened on the flip frame above — this
      is just a quick handoff fade at matching size/position, so no
      transform animation is needed here. */
-  transition: opacity 0.6s ease;
+  transition: opacity 0.5s ease-out;
   z-index: 5;
 }
 
@@ -181,17 +185,17 @@ body.bookshelf {
   opacity: 1;
 }
 
-/* The stage locks to the notebook photo's own aspect ratio using
-   min(), which — unlike plain vw/vh sizing — always fits the whole
-   page on screen with no cropping, on any screen shape from a wide
-   desktop to a tall phone. That keeps the art pieces (positioned in
-   percentages of this box) lined up with the actual photo everywhere,
-   and keeps the whole page in view. The calc() keeps its right edge
-   from ever passing the star on the left as it grows. */
+/* The stage locks to the notebook photo's own aspect ratio using a
+   matched min() pair, which — unlike plain vw/vh sizing — always
+   fits the whole page on screen with no cropping and no distortion,
+   on any screen shape from a wide desktop to a tall phone. That
+   keeps the art pieces (positioned in percentages of this box) lined
+   up with the actual photo everywhere, and lets it run nearly
+   edge-to-edge, centered, for as large a page as the screen allows. */
 #notebook-stage {
   position: relative;
-  width: min(70.5vh, calc(100vw - 96px));
-  height: min(94vh, calc((100vw - 96px) * 1.3333));
+  width: min(96vw, 98.6vh);
+  height: min(93.4vw, 96vh);
   min-width: 260px;
 }
 
@@ -281,6 +285,18 @@ body.bookshelf {
 
 #nav-logo:hover img {
   transform: rotate(-12deg);
+}
+
+/* Only used on the homepage, where the star is hidden until the
+   notebook opens — fades in alongside the page instead of popping in
+   instantly. Other pages show the star plainly with no such class. */
+#nav-logo.will-fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+#nav-logo.will-fade-in.is-visible {
+  opacity: 1;
 }
 
 #nav-flyout {

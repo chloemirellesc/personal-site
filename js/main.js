@@ -77,27 +77,39 @@ function playFrames(frames, onDone) {
   }, FRAME_DELAY_MS);
 }
 
+// Keep in sync with the width/height transition duration on
+// .notebook-frame in style.css.
+const ZOOM_MS = 1300;
+// Start the page (and its art) fading in slightly before the zoom
+// finishes growing, so the handoff reads as one continuous motion
+// instead of "zoom stops, then a separate fade begins."
+const ZOOM_OVERLAP_MS = 300;
+
 function zoomIntoLastFrame(img, onDone) {
   // Grow the very same last-flip-frame element into the final zoomed
   // size, so the flip and the zoom read as one continuous motion
   // instead of a cut between two differently-sized elements.
   requestAnimationFrame(() => img.classList.add("is-zooming"));
 
-  img.addEventListener("transitionend", function handleZoomEnd(e) {
-    if (e.propertyName !== "width") return;
-    img.removeEventListener("transitionend", handleZoomEnd);
-    // Page fades in at the exact size/position the frame just grew
-    // to, so the handoff is invisible, then the frame is discarded.
+  setTimeout(() => {
+    // Page fades in at (almost) the exact size/position the frame is
+    // still growing into, so the handoff is barely noticeable, then
+    // the frame fades out and is discarded underneath it.
     onDone();
     img.classList.add("is-fading");
-    setTimeout(() => img.remove(), 700);
-  });
+    setTimeout(() => img.remove(), 450);
+  }, ZOOM_MS - ZOOM_OVERLAP_MS);
 }
 
 function openPage(page, navLogo) {
   page.hidden = false;
-  if (navLogo) navLogo.hidden = false;
   requestAnimationFrame(() => page.classList.add("is-visible"));
+
+  if (navLogo) {
+    navLogo.hidden = false;
+    // Same fade-in as the page, rather than popping in instantly.
+    requestAnimationFrame(() => navLogo.classList.add("is-visible"));
+  }
 }
 
 // ---------------------------------------------
