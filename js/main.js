@@ -129,12 +129,18 @@ function initNotebookArt() {
     link.style.left = art.left + "%";
     link.style.top = art.top + "%";
     link.style.width = art.width + "%";
-    if (art.title) link.title = art.title;
 
     const img = document.createElement("img");
     img.src = art.image;
     img.alt = art.title || "";
     img.draggable = false;
+
+    if (art.title) {
+      const label = document.createElement("span");
+      label.className = "art-label";
+      label.textContent = art.title;
+      link.appendChild(label);
+    }
 
     link.appendChild(img);
     layer.appendChild(link);

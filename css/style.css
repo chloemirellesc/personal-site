@@ -257,6 +257,30 @@ body.bookshelf {
   transform: translate(-50%, -50%) scale(1.06) translateY(-3px);
 }
 
+/* Label showing which page each piece links to — same treatment as
+   the paused city-map building labels. */
+.art-label {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 12px;
+  font-family: var(--font-body);
+  background: var(--color-cobalt);
+  color: var(--color-cream);
+  padding: 4px 10px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.art-piece:hover .art-label,
+.art-piece:focus .art-label {
+  opacity: 1;
+}
+
 /* ---------------------------------------------
    Corner nav logo + flyout
 --------------------------------------------- */
