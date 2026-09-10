@@ -140,9 +140,12 @@ a {
 }
 
 .notebook-frame.is-zooming {
-  width: min(calc(100vw - 96px), 92vh);
-  height: auto;
-  aspect-ratio: 1050 / 1400;
+  /* Width and height are each capped by the same two constraints
+     (available width, available height converted to its matching
+     width/height) expressed in their own units, so they always agree
+     with each other and the box never overflows the screen. */
+  width: min(70.5vh, calc(100vw - 96px));
+  height: min(94vh, calc((100vw - 96px) * 1.3333));
 }
 
 .notebook-frame.is-fading {
@@ -187,9 +190,9 @@ body.bookshelf {
    from ever passing the star on the left as it grows. */
 #notebook-stage {
   position: relative;
-  width: min(calc(100vw - 96px), 92vh);
+  width: min(70.5vh, calc(100vw - 96px));
+  height: min(94vh, calc((100vw - 96px) * 1.3333));
   min-width: 260px;
-  aspect-ratio: 1050 / 1400;
 }
 
 #notebook-page-image {
